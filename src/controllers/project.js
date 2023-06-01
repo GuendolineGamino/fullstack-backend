@@ -25,7 +25,7 @@ exports.createProject = async(req,res) => {
             projectSaved: projectSaved
         });
     }
-    catch (error){
+    catch (err){
         console.error("err", err);
         res.status(400).json({
             message: "Was not able to create the project",
@@ -48,5 +48,32 @@ exports.getProjectById = async (req,res) => {
         })
     }
 }
+
+exports.updateProject = async(req,res) =>{
+
+    try{
+        const {id} = req.params;
+        const projectData = req.body;
+        const updatedProject =  await ProjectService.updateProject(id, projectData);
+        res.status(200).json(updatedProject);
+    }
+    catch(error)
+    {
+        res.status(500).json({message:"Internal Error"});
+    }
+};
+
+exports.deleteProject = async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      await ProjectService.deleteProject(id);
+  
+      res.status(204).json();
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal error" });
+    }
+  };
 
 

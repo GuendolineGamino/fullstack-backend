@@ -24,3 +24,14 @@ exports.createProject = async(requestBody) => {
 
     return await project.save();
 }
+
+exports.updateProject = async (id, projectData) => {
+    return await Project.findByIdAndUpdate(id, projectData, {
+        new:true,
+    }).lean().exec();
+   
+};
+
+exports.deleteProject = async (id) => {
+    await Project.findByIdAndDelete(id).exec();
+  };
